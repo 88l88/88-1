@@ -1,4 +1,4 @@
-// left.js - 左側選單 (41.355px × 535px 黑底，膠囊維持不變)
+// left.js - 左側選單 (寬 41.355px，高 100% 黑到底，膠囊間距 5px)
 (function () {
   let recentColors = []; // 儲存最多 4 個點擊過的色碼
 
@@ -11,15 +11,16 @@
     left: '0px',
     top: '0px',
     width: '41.355px',
-    height: '535px',
+    height: '100%',
+    minHeight: '535px',
     backgroundColor: '#000000',
     color: '#ffffff',
     zIndex: '99999',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center', // 垂直置中排列
     alignItems: 'center',
-    padding: '5px 0',
+    gap: '5px', // 兩膠囊之間固定 5px 間距
     boxSizing: 'border-box',
     userSelect: 'none',
     '-webkit-tap-highlight-color': 'transparent'
