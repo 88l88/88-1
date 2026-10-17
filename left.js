@@ -1,3 +1,4 @@
+
 // left.js - 左側選單 (42px × 425px 方框黑底，內含 6 顆 #6c6c6c 30×65 膠囊)
 (function () {
   let recentColors = []; // 儲存最多 4 個點擊過的色碼
@@ -42,7 +43,7 @@
       height: '65px',
       backgroundColor: '#6c6c6c',
       color: '#ffffff',
-      fontSize: '12px',
+      fontSize: '10px',
       fontWeight: 'bold',
       textAlign: 'center',
       writingMode: 'vertical-lr',
@@ -52,16 +53,52 @@
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      position: 'relative', // 讓內部指示燈可絕對定位
       boxSizing: 'border-box',
-      transition: 'background-color 0.15s, color 0.15s'
+      transition: 'background-color 0.15s, color 0.15s',
+      '-webkit-tap-highlight-color': 'transparent'
     });
 
-    btn.onmousedown = () => (btn.style.backgroundColor = '#444444');
-    btn.onmouseup = () => (btn.style.backgroundColor = '#6c6c6c');
+    // 建立綠燈指示燈（預設暗色）
+    const light = document.createElement('div');
+    Object.assign(light.style, {
+      position: 'absolute',
+      bottom: '4px',
+      width: '6px',
+      height: '6px',
+      backgroundColor: '#222222',
+      borderRadius: '50%',
+      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.5)',
+      transition: 'background-color 0.15s, box-shadow 0.15s'
+    });
+    btn.appendChild(light);
+
+    btn.dataset.active = 'false';
 
     btn.onclick = (e) => {
       e.stopPropagation();
-      t.action();
+
+      // 先清除其他所有按鈕的綠燈狀態
+      document.querySelectorAll('#left-sidebar-container > div').forEach(b => {
+        b.style.backgroundColor = '#6c6c6c';
+        b.style.color = '#ffffff';
+        b.dataset.active = 'false';
+        const l = b.querySelector('div');
+        if (l) {
+          l.style.backgroundColor = '#222222';
+          l.style.boxShadow = 'inset 0 1px 2px rgba(0,0,0,0.5)';
+        }
+      });
+
+      // 設定當前按鈕為綠燈亮起狀態
+      btn.style.backgroundColor = '#4e9a06'; // 綠色背景
+      btn.style.color = '#ffffff';
+      btn.dataset.active = 'true';
+      light.style.backgroundColor = '#00ff00'; // 亮綠燈
+      light.style.boxShadow = '0 0 6px #00ff00, inset 0 1px 2px rgba(0,0,0,0.2)';
+
+      // 執行網址跳轉
+      t.action(); 
     };
     sidebar.appendChild(btn);
   });
