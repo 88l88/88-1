@@ -111,4 +111,5 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!document.getElementById("right-sidebar-container")) {
     target.appendChild(sidebar);
   }
+  document.body.appendChild(sidebar);
 });
