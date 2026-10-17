@@ -1,4 +1,4 @@
-// left.js - 左側選單 (41.355px × 535px 黑底，膠囊維持不變)
+// left.js - 左側選單 (42px × 425px 方框黑底，內含 6 顆 #6c6c6c 30×65 膠囊)
 (function () {
   let recentColors = []; // 儲存最多 4 個點擊過的色碼
 
@@ -10,9 +10,8 @@
     position: 'fixed',
     left: '0px',
     top: '0px',
-    width: '39.855px',
-    height: '100%',
-    minHeight: '535px';
+    width: '42px',
+    height: '425px',
     backgroundColor: '#000000',
     color: '#ffffff',
     zIndex: '99999',
@@ -20,10 +19,9 @@
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '5px 0',
+    padding: '5px 0', // 上下各 5px 空白
     boxSizing: 'border-box',
-    userSelect: 'none',
-    '-webkit-tap-highlight-color': 'transparent'
+    userSelect: 'none'
   });
 
   // 6 個工具按鈕定義
@@ -44,7 +42,7 @@
       height: '65px',
       backgroundColor: '#6c6c6c',
       color: '#ffffff',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: 'bold',
       textAlign: 'center',
       writingMode: 'vertical-lr',
@@ -54,58 +52,23 @@
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      position: 'relative',
       boxSizing: 'border-box',
-      transition: 'background-color 0.15s, color 0.15s',
-      '-webkit-tap-highlight-color': 'transparent'
+      transition: 'background-color 0.15s, color 0.15s'
     });
 
-    const light = document.createElement('div');
-    light.className = 'indicator-light';
-    Object.assign(light.style, {
-      position: 'absolute',
-      bottom: '4px',
-      width: '6px',
-      height: '6px',
-      backgroundColor: '#222222',
-      borderRadius: '50%',
-      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.5)',
-      transition: 'background-color 0.15s, box-shadow 0.15s'
-    });
-    btn.appendChild(light);
-
-    btn.dataset.active = 'false';
+    btn.onmousedown = () => (btn.style.backgroundColor = '#444444');
+    btn.onmouseup = () => (btn.style.backgroundColor = '#6c6c6c');
 
     btn.onclick = (e) => {
       e.stopPropagation();
-
-      document.querySelectorAll('#left-sidebar-container > div').forEach(b => {
-        b.style.backgroundColor = '#6c6c6c';
-        b.style.color = '#ffffff';
-        b.dataset.active = 'false';
-        const l = b.querySelector('.indicator-light');
-        if (l) {
-          l.style.backgroundColor = '#222222';
-          l.style.boxShadow = 'inset 0 1px 2px rgba(0,0,0,0.5)';
-        }
-      });
-
-      btn.style.backgroundColor = '#4e9a06';
-      btn.style.color = '#ffffff';
-      btn.dataset.active = 'true';
-      light.style.backgroundColor = '#00ff00';
-      light.style.boxShadow = '0 0 6px #00ff00, inset 0 1px 2px rgba(0,0,0,0.2)';
-
-      t.action(); 
+      t.action();
     };
     sidebar.appendChild(btn);
   });
 
   function mount() {
     const target = document.getElementById('leftSidebar') || document.body;
-    if (!document.getElementById('left-sidebar-container')) {
-      target.appendChild(sidebar);
-    }
+    target.appendChild(sidebar);
   }
 
   if (document.readyState === 'loading') {
@@ -114,8 +77,11 @@
     mount();
   }
 
+  // ==========================================
+  // 2. 「色碼庫」彈窗邏輯
+  // ==========================================
   function openColorPalette() {
-    closeModal();
+    closeModal(); // 開啟時清空舊彈窗
 
     const mask = document.createElement('div');
     mask.id = 'color-modal-mask';
@@ -133,7 +99,7 @@
     modal.id = 'color-modal-body';
     Object.assign(modal.style, {
       position: 'fixed',
-      left: '47px',
+      left: '47px', // 緊貼 42px 邊欄旁
       top: '5px',
       width: '400px',
       maxWidth: 'calc(100vw - 55px)',
@@ -143,6 +109,7 @@
       boxShadow: '0 6px 24px rgba(0,0,0,0.5)',
       overflow: 'hidden',
       fontFamily: 'sans-serif',
+      
       boxSizing: 'border-box'
     });
 
@@ -152,6 +119,7 @@
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '10px 14px',
+      
       backgroundColor: '#fff'
     });
 
@@ -180,6 +148,7 @@
     header.appendChild(closeBtn);
     modal.appendChild(header);
 
+    // 上方 4 個獨立紀錄框區域
     const historyContainer = document.createElement('div');
     Object.assign(historyContainer.style, {
       display: 'grid',
@@ -208,6 +177,7 @@
           width: '100%',
           height: '24px',
           borderRadius: '3px',
+          
           backgroundColor: hex || '#eeeeee',
           boxSizing: 'border-box'
         });
@@ -241,6 +211,7 @@
     renderHistory();
     modal.appendChild(historyContainer);
 
+    // 下方主色盤 (16 欄)
     const grid = document.createElement('div');
     Object.assign(grid.style, {
       display: 'grid',
@@ -310,6 +281,7 @@
 
   function closeModal() {
     recentColors = [];
+
     const mask = document.getElementById('color-modal-mask');
     if (mask) {
       if (mask._outsideListener) {
