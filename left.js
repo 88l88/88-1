@@ -1,4 +1,3 @@
-
 // left.js - 左側選單 (42px × 425px 方框黑底，內含 6 顆 #6c6c6c 30×65 膠囊)
 (function () {
   let recentColors = []; // 儲存最多 4 個點擊過的色碼
@@ -22,7 +21,8 @@
     alignItems: 'center',
     padding: '5px 0', // 上下各 5px 空白
     boxSizing: 'border-box',
-    userSelect: 'none'
+    userSelect: 'none',
+    '-webkit-tap-highlight-color': 'transparent'
   });
 
   // 6 個工具按鈕定義
@@ -61,6 +61,7 @@
 
     // 建立綠燈指示燈（預設暗色）
     const light = document.createElement('div');
+    light.className = 'indicator-light';
     Object.assign(light.style, {
       position: 'absolute',
       bottom: '4px',
@@ -83,7 +84,7 @@
         b.style.backgroundColor = '#6c6c6c';
         b.style.color = '#ffffff';
         b.dataset.active = 'false';
-        const l = b.querySelector('div');
+        const l = b.querySelector('.indicator-light');
         if (l) {
           l.style.backgroundColor = '#222222';
           l.style.boxShadow = 'inset 0 1px 2px rgba(0,0,0,0.5)';
@@ -97,7 +98,7 @@
       light.style.backgroundColor = '#00ff00'; // 亮綠燈
       light.style.boxShadow = '0 0 6px #00ff00, inset 0 1px 2px rgba(0,0,0,0.2)';
 
-      // 執行網址跳轉
+      // 執行對應動作
       t.action(); 
     };
     sidebar.appendChild(btn);
@@ -105,7 +106,9 @@
 
   function mount() {
     const target = document.getElementById('leftSidebar') || document.body;
-    target.appendChild(sidebar);
+    if (!document.getElementById('left-sidebar-container')) {
+      target.appendChild(sidebar);
+    }
   }
 
   if (document.readyState === 'loading') {
@@ -146,7 +149,6 @@
       boxShadow: '0 6px 24px rgba(0,0,0,0.5)',
       overflow: 'hidden',
       fontFamily: 'sans-serif',
-      
       boxSizing: 'border-box'
     });
 
@@ -156,7 +158,6 @@
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '10px 14px',
-      
       backgroundColor: '#fff'
     });
 
@@ -214,7 +215,6 @@
           width: '100%',
           height: '24px',
           borderRadius: '3px',
-          
           backgroundColor: hex || '#eeeeee',
           boxSizing: 'border-box'
         });
