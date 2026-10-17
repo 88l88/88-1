@@ -10,7 +10,7 @@
     position: 'fixed',
     left: '0px',
     top: '0px',
-    width: '41.355px',
+    width: '39.855px',
     height: '100%',
     minHeight: '535px',
     backgroundColor: '#000000',
@@ -40,7 +40,7 @@
     const btn = document.createElement('div');
     btn.innerText = t.name;
     Object.assign(btn.style, {
-      width: '30px',
+      width: '28px',
       height: '65px',
       backgroundColor: '#6c6c6c',
       color: '#ffffff',
@@ -51,7 +51,7 @@
       letterSpacing: '1px',
       cursor: 'pointer',
       borderRadius: '15px',
-      display: 'flex',
+      display 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
