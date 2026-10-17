@@ -304,4 +304,5 @@
         };
         return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
     }
+    document.body.appendChild(sidebar);
 })();
