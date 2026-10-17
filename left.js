@@ -40,7 +40,7 @@
     const btn = document.createElement('div');
     btn.innerText = t.name;
     Object.assign(btn.style, {
-      width: '28px',
+      width: '30px',
       height: '65px',
       backgroundColor: '#6c6c6c',
       color: '#ffffff',
