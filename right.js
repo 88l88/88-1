@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     position: "fixed",
     right: "0px",
     top: "0px",
-    width: "41.355px",
+    width: "39.855px",
     height: "100%",
     minHeight: "535px",
     backgroundColor: "#000000",
