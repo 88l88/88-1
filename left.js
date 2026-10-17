@@ -12,7 +12,7 @@
     top: '0px',
     width: '39.855px',
     height: '100%',
-    minHeight:535px;
+    minHeight: '535px';
     backgroundColor: '#000000',
     color: '#ffffff',
     zIndex: '99999',
