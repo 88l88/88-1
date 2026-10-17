@@ -1,6 +1,5 @@
-// right.js - 右側選單 (42px × 425px 方框黑底，內含 6 顆 #6c6c6c 30×65 膠囊，點擊亮紅燈)
+// right.js - 右側選單 (寬 41.355px，高 100% 黑到底，膠囊間距 5px)
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. 建立右側邊欄主體
   const sidebar = document.createElement("div");
   sidebar.id = "right-sidebar-container";
 
@@ -9,21 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
     right: "0px",
     top: "0px",
     width: "41.355px",
-    height: "525px",
+    height: "100%",
+    minHeight: "535px",
     backgroundColor: "#000000",
     color: "#ffffff",
     zIndex: "99999",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "center", // 垂直置中排列
     alignItems: "center",
-    padding: "5px 0", // 上下各 5px 空白
+    gap: "5px", // 兩膠囊之間固定 5px 間距
     boxSizing: "border-box",
-    userSelect: "none",
-    "-webkit-tap-highlight-color": "transparent"
+    userSelect: "none"
   });
 
-  // 2. 6 個選單對應的檔名與文字
   const rightCapsules = [
     { text: "分佈", url: "分佈.html" },
     { text: "尾數", url: "尾數.html" },
@@ -33,15 +31,13 @@ document.addEventListener("DOMContentLoaded", function () {
     { text: "統計", url: "統計.html" }
   ];
 
-  // 3. 自動辨識當前網址檔名
   const currentPath = decodeURIComponent(window.location.pathname);
   let currentFile = currentPath.split("/").pop();
 
   if (!currentFile || currentFile === "" || currentFile === "index.html") {
-    currentFile = "遺漏.html"; // 預設頁面
+    currentFile = "遺漏.html";
   }
 
-  // 4. 渲染 6 顆右側膠囊按鈕
   rightCapsules.forEach(function (item) {
     const a = document.createElement("a");
     a.href = item.url;
@@ -50,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Object.assign(a.style, {
       width: "30px",
       height: "65px",
-      backgroundColor: "#6c6c6c", // 預設深灰膠囊
+      backgroundColor: "#6c6c6c",
       color: "#ffffff",
       fontSize: "12px",
       fontWeight: "bold",
@@ -62,14 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      position: "relative", // 讓內部指示燈可絕對定位
+      position: "relative",
       textDecoration: "none",
       boxSizing: "border-box",
       transition: "background-color 0.15s, color 0.15s",
       "-webkit-tap-highlight-color": "transparent"
     });
 
-    // 建立紅燈指示燈（預設暗色）
     const light = document.createElement("div");
     light.className = "indicator-light";
     Object.assign(light.style, {
@@ -84,20 +79,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     a.appendChild(light);
 
-    // 判斷是否為當前頁面，若是則直接亮紅燈
     const isActive = (currentFile === item.url || window.location.href.includes(encodeURIComponent(item.url)));
     if (isActive) {
-      a.style.backgroundColor = "#a40000"; // 紅色背景
+      a.style.backgroundColor = "#a40000";
       a.style.color = "#ffffff";
-      light.style.backgroundColor = "#ff0000"; // 亮紅燈
+      light.style.backgroundColor = "#ff0000";
       light.style.boxShadow = "0 0 6px #ff0000, inset 0 1px 2px rgba(0,0,0,0.2)";
     }
 
-    // 點擊事件：點擊時亮紅燈並跳轉
     a.onclick = function (e) {
       e.stopPropagation();
 
-      // 清除所有右側按鈕狀態
       document.querySelectorAll('#right-sidebar-container > a').forEach(b => {
         b.style.backgroundColor = '#6c6c6c';
         b.style.color = '#ffffff';
@@ -108,17 +100,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      // 設定當前點擊按鈕為紅燈
       a.style.backgroundColor = '#a40000';
       a.style.color = '#ffffff';
       light.style.backgroundColor = '#ff0000';
-      light.style.boxShadow = '0 0 6px #ff0000, inset 0 1px 2px rgba(0,0,0,0.2)';
+      light.style.boxShadow = "0 0 6px #ff0000, inset 0 1px 2px rgba(0,0,0,0.2)";
     };
 
     sidebar.appendChild(a);
   });
 
-  // 自動掛載至 HTML 中的 #rightSidebar 或 document.body
   const target = document.getElementById("rightSidebar") || document.body;
   if (!document.getElementById("right-sidebar-container")) {
     target.appendChild(sidebar);
