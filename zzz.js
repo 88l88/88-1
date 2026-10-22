@@ -9,7 +9,11 @@ var zzz = ddd.map((row, i) => [
   myIdx + (myBaseIdx - i)                   // [期次 index]
 ]);
 
-var sss = ddd.map(row => [row[0], '日一二三四五六'[new Date(row[0]).getDay()], row[1].slice().sort()]);
+var sss = ddd.map(row => [
+  row[0], 
+  '日一二三四五六'[new Date(row[0]).getDay()], 
+  row[1].slice().sort()
+]);
 
 var Color = [
 ['#f2f2f2','#e6e6ff','#e6ffe6','#ffe6f9','#fff9e6','#e6ffff','#f5f5f0','#f2e6ff','#fff2e6','#f0f0f5','#f9e6ff','#ffe6e6'],
